@@ -24,8 +24,8 @@ Web prototype for exploring NZ short-term rental data nationwide.
 | [`rioel-aotearoa/nationwide-dashboard.html`](rioel-aotearoa/nationwide-dashboard.html) | Nationwide dashboard |
 | [`rioel-aotearoa/nationwide-dashboard-v2.html`](rioel-aotearoa/nationwide-dashboard-v2.html) | Second version |
 
-### SmartCare Health Console
-Health monitoring console for 50 patients (sleep, stress, steps, heart rate): risk tiers, readiness scores, care plans, what-if simulator, and role-based access.
+### SmartCare Health Console (smart watch data)
+Health console built on smart watch data for 50 patients (sleep, stress, steps, heart rate): risk tiers, readiness scores, care plans, what-if simulator, and role-based access.
 
 | File | What it is |
 | --- | --- |
