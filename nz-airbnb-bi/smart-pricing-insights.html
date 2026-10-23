@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Pricing Insights — NZ Airbnb Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFAF6;
+  --paper-alt:#F1EFE7;
+  --ink:#17231F;
+  --ink-soft:#5B6A63;
+  --teal:#0E5C52;
+  --teal-deep:#0A3F39;
+  --clay:#B75B3C;
+  --clay-soft:#F3E1D8;
+  --gold:#C99A3E;
+  --gold-soft:#F6ECD4;
+  --red:#B5453A;
+  --red-soft:#F5E1DE;
+  --line:#DEDACB;
+  --card:#FFFFFF;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#121613;
+    --paper-alt:#181D19;
+    --ink:#EDEAE0;
+    --ink-soft:#9CA89E;
+    --teal:#4FAE9C;
+    --teal-deep:#3C8C7D;
+    --clay:#D98E6C;
+    --clay-soft:#2C231C;
+    --gold:#E0BB6C;
+    --gold-soft:#2A2417;
+    --red:#DB8579;
+    --red-soft:#2E211E;
+    --line:#2B322C;
+    --card:#181E1A;
+  }
+}
+*{box-sizing:border-box;}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',Arial,sans-serif; font-variant-numeric:tabular-nums;}
+.wrap{max-width:1100px; margin:0 auto; padding:0 24px 100px;}
+.display{font-family:'Fraunces',Georgia,serif;}
+
+/* ---- header ---- */
+header.top{
+  background:var(--teal-deep); color:#F6F4EC; padding:56px 24px 64px;
+}
+.top-inner{max-width:1100px; margin:0 auto;}
+.eyebrow{font-size:13px; color:#B9D4CB; margin-bottom:14px; letter-spacing:.02em;}
+h1.hero{font-family:'Fraunces',Georgia,serif; font-weight:500; font-size:44px; line-height:1.12; margin:0 0 18px; max-width:760px;}
+.hero-sub{font-size:16px; color:#CFE3DC; max-width:620px; line-height:1.6; margin:0 0 34px;}
+.hero-stats{display:flex; gap:44px; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,.18); padding-top:28px;}
+.hero-stat .num{font-family:'Fraunces',Georgia,serif; font-size:34px; font-weight:500; color:#F6F4EC;}
+.hero-stat .lbl{font-size:13px; color:#AFC9C0; margin-top:2px; max-width:180px; line-height:1.4;}
+
+/* ---- sections ---- */
+section{padding:56px 0; border-bottom:1px solid var(--line);}
+section:last-of-type{border-bottom:none;}
+.sec-head{max-width:640px; margin-bottom:32px;}
+.sec-label{font-size:13px; color:var(--clay); font-weight:600; margin-bottom:8px;}
+h2{font-family:'Fraunces',Georgia,serif; font-weight:500; font-size:28px; margin:0 0 10px; line-height:1.25;}
+.sec-desc{color:var(--ink-soft); font-size:15px; line-height:1.65; margin:0;}
+
+/* ---- kpi strip ---- */
+.kpi-row{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+.kpi{background:var(--card); padding:22px 20px;}
+.kpi .num{font-family:'Fraunces',Georgia,serif; font-size:26px; font-weight:500;}
+.kpi .lbl{font-size:12.5px; color:var(--ink-soft); margin-top:4px; line-height:1.4;}
+
+/* ---- segmentation ---- */
+.seg-layout{display:grid; grid-template-columns:280px 1fr; gap:48px; align-items:center;}
+.seg-table{width:100%; border-collapse:collapse; font-size:14px;}
+.seg-table th{text-align:left; font-weight:600; font-size:12px; color:var(--ink-soft); padding:8px 10px; border-bottom:1px solid var(--line);}
+.seg-table td{padding:12px 10px; border-bottom:1px solid var(--line);}
+.seg-dot{display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px;}
+.seg-name{font-weight:600;}
+
+/* ---- revenue callout ---- */
+.callout{
+  background:var(--gold-soft); border:1px solid var(--gold); border-radius:2px;
+  padding:32px 34px; display:flex; gap:36px; align-items:center; flex-wrap:wrap;
+}
+.callout .big{font-family:'Fraunces',Georgia,serif; font-size:40px; font-weight:500; color:var(--teal-deep);}
+.callout .caption{font-size:14px; color:var(--ink-soft); max-width:420px; line-height:1.55;}
+.callout-figs{display:flex; gap:28px; flex-wrap:wrap; margin-top:6px;}
+.callout-fig .n{font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:16px;}
+.callout-fig .l{font-size:12px; color:var(--ink-soft);}
+
+/* ---- model table ---- */
+table.model{width:100%; border-collapse:collapse; font-size:14px;}
+table.model th{text-align:left; padding:10px 14px; font-size:12px; color:var(--ink-soft); border-bottom:2px solid var(--ink);}
+table.model td{padding:12px 14px; border-bottom:1px solid var(--line);}
+table.model tr.best td{font-weight:600; background:var(--teal); color:#fff;}
+table.model tr.best td:first-child{border-radius:2px 0 0 2px;}
+
+/* ---- drivers bar chart ---- */
+.driver-row{display:grid; grid-template-columns:150px 1fr 60px; align-items:center; gap:14px; margin-bottom:10px; font-size:13.5px;}
+.driver-track{background:var(--paper-alt); height:20px; border-radius:2px; position:relative; overflow:hidden;}
+.driver-fill{height:100%; background:var(--teal);}
+.driver-fill.neg{background:var(--red);}
+.driver-val{font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-soft); text-align:right;}
+
+/* ---- two-col grid for property/superhost ---- */
+.two-col{display:grid; grid-template-columns:1fr 1fr; gap:48px;}
+@media (max-width:760px){ .two-col{grid-template-columns:1fr;} .seg-layout{grid-template-columns:1fr;} .kpi-row{grid-template-columns:1fr 1fr;} }
+
+.prop-row{display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--line); font-size:14px;}
+.prop-bar-wrap{flex:1; margin:0 16px; background:var(--paper-alt); height:8px; border-radius:2px; overflow:hidden;}
+.prop-bar{height:100%; background:var(--clay);}
+
+.host-compare{display:flex; gap:0; border:1px solid var(--line);}
+.host-col{flex:1; padding:22px 20px; text-align:center;}
+.host-col.super{background:var(--teal); color:#fff;}
+.host-col .tag{font-size:12px; margin-bottom:14px; opacity:.85;}
+.host-col .figure{font-family:'Fraunces',Georgia,serif; font-size:24px; font-weight:500; margin-bottom:2px;}
+.host-col .figure-lbl{font-size:11.5px; opacity:.8;}
+.host-col .row2{margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,.25);}
+.host-col:not(.super) .row2{border-top:1px solid var(--line);}
+
+/* ---- recommendations ---- */
+.rec-list{list-style:none; margin:0; padding:0; counter-reset:rec;}
+.rec-list li{counter-increment:rec; display:flex; gap:18px; padding:18px 0; border-bottom:1px solid var(--line);}
+.rec-list li:last-child{border-bottom:none;}
+.rec-num{font-family:'Fraunces',Georgia,serif; font-size:20px; color:var(--clay); min-width:28px;}
+.rec-text{font-size:14.5px; line-height:1.6;}
+.rec-text b{font-weight:600;}
+
+/* ---- limitations ---- */
+.limits{font-size:13.5px; color:var(--ink-soft); line-height:1.7;}
+.limits ul{padding-left:18px; margin:10px 0 0;}
+.limits li{margin-bottom:6px;}
+
+footer.page{padding:34px 0 10px; font-size:12.5px; color:var(--ink-soft); line-height:1.7;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="eyebrow">Host-Tools &amp; Pricing Product Team · New Zealand market pilot</div>
+    <h1 class="hero">Almost 4 in 10 NZ listings are leaving money on the table.</h1>
+    <p class="hero-sub">A Gradient Boosting model trained on 10,225 New Zealand listings estimates each one's fair market price. Comparing that estimate against what hosts actually charge surfaces a NZ$21.5 million annual revenue gap — concentrated almost entirely in underpriced listings.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">39.7%</div><div class="lbl">of listings underpriced by more than 15%</div></div>
+      <div class="hero-stat"><div class="num">NZ$21.5m</div><div class="lbl">estimated annual revenue opportunity</div></div>
+      <div class="hero-stat"><div class="num">62.3%</div><div class="lbl">of price variance explained by the model (R²)</div></div>
+      <div class="hero-stat"><div class="num">10,225</div><div class="lbl">listings analysed after cleaning</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-label">Market overview</div>
+      <h2>What the NZ short-term rental market looks like today</h2>
+      <p class="sec-desc">Based on a cleaned export of 10,225 New Zealand Airbnb listings, in the same format as the Inside Airbnb project.</p>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="num">$257</div><div class="lbl">Median nightly price ($338 mean — right-skewed by luxury/large properties)</div></div>
+      <div class="kpi"><div class="num">32.6%</div><div class="lbl">Average occupied nights over the last 365 days</div></div>
+      <div class="kpi"><div class="num">$8,754</div><div class="lbl">Median estimated annual revenue per listing</div></div>
+      <div class="kpi"><div class="num">42.8%</div><div class="lbl">of hosts hold Superhost status</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-label">Pricing segmentation</div>
+      <h2>Where every listing sits against its model-estimated fair price</h2>
+      <p class="sec-desc">Underpriced/overpriced is defined as more than 15% below or above the model's predicted fair value — wide enough to avoid flagging ordinary price variation, narrow enough to catch a real, actionable gap.</p>
+    </div>
+    <div class="seg-layout">
+      <div style="width:100%; max-width:260px; aspect-ratio:1; border-radius:50%; position:relative;
+        background:conic-gradient(var(--teal) 0% 39.7%, var(--clay) 39.7% 75.4%, var(--red) 75.4% 100%);">
+        <div style="position:absolute; inset:17%; background:var(--paper); border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+          <div style="font-family:'Fraunces',Georgia,serif; font-size:28px; font-weight:500; color:var(--ink);">39.7%</div>
+          <div style="font-family:'Inter',Arial,sans-serif; font-size:11px; color:var(--ink-soft);">underpriced</div>
+        </div>
+      </div>
+      <table class="seg-table">
+        <thead><tr><th>Segment</th><th>Listings</th><th>Share</th><th>Avg. deviation</th></tr></thead>
+        <tbody>
+          <tr><td><span class="seg-dot" style="background:var(--teal);"></span><span class="seg-name">Underpriced</span> — more than 15% below fair value</td><td>4,063</td><td>39.7%</td><td>−32.1%</td></tr>
+          <tr><td><span class="seg-dot" style="background:var(--clay);"></span><span class="seg-name">Well-priced</span> — within ±15% of fair value</td><td>3,647</td><td>35.7%</td><td>—</td></tr>
+          <tr><td><span class="seg-dot" style="background:var(--red);"></span><span class="seg-name">Overpriced</span> — more than 15% above fair value</td><td>2,515</td><td>24.6%</td><td>+49.6%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-label">Revenue opportunity</div>
+      <h2>What correcting the underpriced segment is worth</h2>
+    </div>
+    <div class="callout">
+      <div>
+        <div class="big">NZ$21.5m / year</div>
+        <p class="caption">A conservative estimate: raising each underpriced listing halfway to its modelled fair price, at its current occupancy rate — not the full gap, and not assuming occupancy changes.</p>
+      </div>
+      <div class="callout-figs">
+        <div class="callout-fig"><div class="n">$5,302</div><div class="l">per underpriced listing, per year</div></div>
+        <div class="callout-fig"><div class="n">+11.7%</div><div class="l">uplift on current underpriced-segment revenue</div></div>
+        <div class="callout-fig"><div class="n">4,063</div><div class="l">listings this applies to</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-label">The model</div>
+      <h2>Gradient Boosting outperformed the simpler baselines</h2>
+      <p class="sec-desc">Three regression models were trained on 16 numeric and 3 categorical features (capacity, amenities, reviews, host signals, location) and evaluated on a held-out 2,045-listing test set.</p>
+    </div>
+    <table class="model">
+      <thead><tr><th>Model</th><th>MAE</th><th>RMSE</th><th>R²</th></tr></thead>
+      <tbody>
+        <tr><td>Linear Regression</td><td>$112.45</td><td>$175.95</td><td>0.576</td></tr>
+        <tr><td>Random Forest</td><td>$105.63</td><td>$166.93</td><td>0.618</td></tr>
+        <tr class="best"><td>Gradient Boosting — production model</td><td>$103.03</td><td>$165.83</td><td>0.623</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-label">Price drivers</div>
+      <h2>What actually correlates with nightly price</h2>
+      <p class="sec-desc">Correlation with price (Pearson's r). Capacity dominates; review scores and occupancy barely move the needle.</p>
+    </div>
+    <div>
+      <div class="driver-row"><div>Bedrooms</div><div class="driver-track"><div class="driver-fill" style="width:68%;"></div></div><div class="driver-val">r = 0.68</div></div>
+      <div class="driver-row"><div>Accommodates</div><div class="driver-track"><div class="driver-fill" style="width:66%;"></div></div><div class="driver-val">r = 0.66</div></div>
+      <div class="driver-row"><div>Bathrooms</div><div class="driver-track"><div class="driver-fill" style="width:54%;"></div></div><div class="driver-val">r = 0.54</div></div>
+      <div class="driver-row"><div>Beds</div><div class="driver-track"><div class="driver-fill" style="width:53%;"></div></div><div class="driver-val">r = 0.53</div></div>
+      <div class="driver-row"><div>Guest rating</div><div class="driver-track"><div class="driver-fill" style="width:7%;"></div></div><div class="driver-val">r = 0.07</div></div>
+      <div class="driver-row"><div>Value-for-money score</div><div class="driver-track"><div class="driver-fill neg" style="width:4%; margin-left:auto;"></div></div><div class="driver-val">r = −0.04</div></div>
+      <div class="driver-row"><div>Occupancy rate</div><div class="driver-track"><div class="driver-fill neg" style="width:2%; margin-left:auto;"></div></div><div class="driver-val">r = −0.02</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="two-col">
+      <div>
+        <div class="sec-label">Listing mix</div>
+        <h2 style="font-size:22px;">Property types</h2>
+        <div style="margin-top:20px;">
+          <div class="prop-row"><span>Entire home</span><div class="prop-bar-wrap"><div class="prop-bar" style="width:34.2%;"></div></div><span>34.2%</span></div>
+          <div class="prop-row"><span>Entire rental unit</span><div class="prop-bar-wrap"><div class="prop-bar" style="width:18.1%;"></div></div><span>18.1%</span></div>
+          <div class="prop-row"><span>Private room</span><div class="prop-bar-wrap"><div class="prop-bar" style="width:13.3%;"></div></div><span>13.3%</span></div>
+          <div class="prop-row"><span>All other types</span><div class="prop-bar-wrap"><div class="prop-bar" style="width:34.4%;"></div></div><span>34.4%</span></div>
+        </div>
+        <p class="sec-desc" style="margin-top:14px; font-size:13px;">"Other" spans guesthouses, guest suites, cottages, cabins, townhouses and hotel rooms — no single one large enough to break out on its own.</p>
+      </div>
+      <div>
+        <div class="sec-label">Host professionalism</div>
+        <h2 style="font-size:22px;">Superhosts price lower, earn far more</h2>
+        <div class="host-compare" style="margin-top:20px;">
+          <div class="host-col super">
+            <div class="tag">Superhost</div>
+            <div class="figure">$249</div>
+            <div class="figure-lbl">median nightly price</div>
+            <div class="row2">
+              <div class="figure">$30,600</div>
+              <div class="figure-lbl">median annual revenue</div>
+            </div>
+          </div>
+          <div class="host-col">
+            <div class="tag">Non-superhost</div>
+            <div class="figure">$266</div>
+            <div class="figure-lbl">median nightly price</div>
+            <div class="row2">
+              <div class="figure">$16,400</div>
+              <div class="figure-lbl">median annual revenue</div>
+            </div>
+          </div>
+        </div>
+        <p class="sec-desc" style="margin-top:14px; font-size:13px;">Consistent with Gibbs et al. (2018): the market rewards host professionalism through demand, not through a price premium.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-label">Recommendations</div>
+      <h2>What the host-tools team should build and test</h2>
+    </div>
+    <ol class="rec-list">
+      <li><span class="rec-num">1</span><span class="rec-text"><b>Ship a "Pricing Insights" panel</b>, host-facing only, showing their under/well/overpriced category and the two or three attributes driving it. No automatic price changes — the host decides.</span></li>
+      <li><span class="rec-num">2</span><span class="rec-text"><b>Prioritise the underpriced segment first.</b> It's 39.7% of the market and the lowest-risk revenue source — nobody loses bookings by finding out they can charge more.</span></li>
+      <li><span class="rec-num">3</span><span class="rec-text"><b>Validate with an A/B test</b> before wide rollout — a held-out control group, checked for booking volume, revenue and host satisfaction, not just the model's own accuracy.</span></li>
+      <li><span class="rec-num">4</span><span class="rec-text"><b>Add time-series booking data</b> in a future iteration for genuine day-of-week and seasonal pricing, and photo/listing-completeness quality signals if they become available.</span></li>
+      <li><span class="rec-num">5</span><span class="rec-text"><b>Run a quarterly fairness audit</b> comparing recommended changes across regions and property types, with a human in the loop before any suggestion becomes a pre-filled default.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <div class="sec-label">Read this with</div>
+      <h2 style="font-size:22px;">Limitations</h2>
+    </div>
+    <div class="limits">
+      <p>The model predicts what the market currently pays for similar listings — it does not prove that raising an underpriced listing's rate will causally produce that price at the same occupancy. It also can't see genuine quality signals (photos, furnishing standard, competitive dynamics), which is a real share of the ~$103 average error.</p>
+      <ul>
+        <li>Cross-sectional data only — no seasonality, events, or day-of-week effects</li>
+        <li>Trained on the 1st–99th price percentile ($53–$1,919) — not validated at the extremes</li>
+        <li>The $21.5m figure is illustrative, not causal — actual uplift depends on price elasticity, not modelled here</li>
+        <li>Specific to New Zealand's market structure — reusable elsewhere only with local retraining</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="page">
+    Source: Data-Driven Dynamic Pricing for New Zealand Airbnb Listings — Business Analytics Project, MBI806B. Dataset: 11,708 raw / 10,225 analysed NZ listings, formatted in the style of the Inside Airbnb project. All figures on this page are drawn directly from that report's findings; no per-listing or host-identifying data is shown anywhere here.
+  </footer>
+
+</div>
+
+</body>
+</html>

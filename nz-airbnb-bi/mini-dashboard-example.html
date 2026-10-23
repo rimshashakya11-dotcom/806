@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mini Dashboard Example</title>
+<style>
+  /* ===== 2. CSS: the look ===== */
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 { color: #1F3864; }
+
+  /* Cards laid out in a row using flexbox */
+  .cards {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    flex: 1;
+  }
+  .card .value { font-size: 28px; font-weight: bold; color: #1F3864; }
+  .card .label { color: #666; font-size: 13px; }
+
+  select { padding: 6px; margin-bottom: 16px; }
+
+  table { width: 100%; border-collapse: collapse; background: white; }
+  th, td { padding: 8px 12px; border-bottom: 1px solid #eee; text-align: left; }
+  th { background: #1F3864; color: white; }
+</style>
+</head>
+<body>
+
+  <!-- ===== 1. HTML: the skeleton ===== -->
+  <h1>Ward Price Snapshot</h1>
+
+  <!-- A dropdown filter -->
+  <label for="wardFilter">Filter by ward:</label>
+  <select id="wardFilter" onchange="renderDashboard()">
+    <option value="all">All wards</option>
+  </select>
+
+  <!-- KPI cards, filled in by JavaScript -->
+  <div class="cards">
+    <div class="card"><div class="value" id="kpiListings">-</div><div class="label">Listings</div></div>
+    <div class="card"><div class="value" id="kpiMedian">-</div><div class="label">Median Price</div></div>
+    <div class="card"><div class="value" id="kpiWards">-</div><div class="label">Wards Shown</div></div>
+  </div>
+
+  <!-- A table, filled in by JavaScript -->
+  <table id="wardTable">
+    <thead><tr><th>Ward</th><th>Listings</th><th>Median Price</th></tr></thead>
+    <tbody><!-- rows get added here by JS --></tbody>
+  </table>
+
+<script>
+  // ===== 3. JavaScript: the data and behavior =====
+
+  // In your real dashboard, this array is built from your warehouse CSVs.
+  // Here it's just typed in directly so the example is self-contained.
+  const wardData = [
+    { ward: "Queenstown-Wakatipu", listings: 4235, median: 581 },
+    { ward: "Auckland City",       listings: 9120, median: 265 },
+    { ward: "Wellington City",     listings: 2310, median: 210 },
+    { ward: "Burwood",             listings: 140,  median: 103 },
+  ];
+
+  // Populate the dropdown once, using the ward names from the data
+  const filterEl = document.getElementById('wardFilter');
+  wardData.forEach(row => {
+    const opt = document.createElement('option');
+    opt.value = row.ward;
+    opt.textContent = row.ward;
+    filterEl.appendChild(opt);
+  });
+
+  // This function runs once on page load, and again every time the filter changes
+  function renderDashboard() {
+    const selected = filterEl.value;
+    const rows = selected === 'all'
+      ? wardData
+      : wardData.filter(r => r.ward === selected);
+
+    // --- update the KPI cards ---
+    const totalListings = rows.reduce((sum, r) => sum + r.listings, 0);
+    const medianOfMedians = rows.length
+      ? rows.map(r => r.median).sort((a,b)=>a-b)[Math.floor(rows.length/2)]
+      : 0;
+
+    document.getElementById('kpiListings').textContent = totalListings.toLocaleString();
+    document.getElementById('kpiMedian').textContent = '$' + medianOfMedians;
+    document.getElementById('kpiWards').textContent = rows.length;
+
+    // --- rebuild the table body ---
+    const tbody = document.querySelector('#wardTable tbody');
+    tbody.innerHTML = ''; // clear old rows
+    rows.forEach(r => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${r.ward}</td><td>${r.listings.toLocaleString()}</td><td>$${r.median}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Run it once when the page first loads
+  renderDashboard();
+</script>
+
+</body>
+</html>

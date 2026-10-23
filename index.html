@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rimsha Shakya — MBI Portfolio</title>
+<style>
+  :root { --bg:#f6f3ee; --card:#fff; --ink:#16202a; --muted:#5b6672; --accent:#b4441a; --line:#e3ddd3; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14181d; --card:#1d232a; --ink:#ece8e1; --muted:#9aa5b1; --accent:#f08a5d; --line:#2c343d; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:system-ui, -apple-system, "Segoe UI", sans-serif; line-height:1.5; }
+  .wrap { max-width:960px; margin:0 auto; padding:48px 16px 64px; }
+  h1 { font-family:Georgia, serif; font-size:clamp(28px, 5vw, 40px); margin:0 0 6px; }
+  .lede { color:var(--muted); margin:0 0 36px; max-width:640px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:8px; }
+  .tag { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); }
+  .card h2 { font-size:18px; margin:0; }
+  .card p { margin:0; color:var(--muted); font-size:14px; }
+  .card ul { margin:4px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:4px; }
+  .card a { color:var(--ink); font-size:14px; font-weight:600; text-decoration:none; border-bottom:1px solid var(--line); }
+  .card a:hover { color:var(--accent); border-color:var(--accent); }
+  footer { margin-top:40px; font-size:13px; color:var(--muted); }
+  footer a { color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Rimsha Shakya — MBI Portfolio</h1>
+  <p class="lede">Dashboards, analytics projects and presentations from my Master of Business Informatics coursework (806 / 807) at Yoobee, and my internship project at ACM Removals.</p>
+
+  <div class="grid">
+    <div class="card">
+      <span class="tag">MBI807B · Business intelligence</span>
+      <h2>NZ Short-Term Rentals BI</h2>
+      <p>Inside Airbnb NZ data through Python ETL into a SQLite star schema, with dashboards on price and demand by ward.</p>
+      <ul>
+        <li><a href="nz-airbnb-bi/dashboard.html">NZ Airbnb BI Dashboard</a></li>
+        <li><a href="nz-airbnb-bi/presentation/index.html">Presentation (5 slides)</a></li>
+        <li><a href="nz-airbnb-bi/smart-pricing-insights.html">Smart Pricing Insights</a></li>
+        <li><a href="nz-airbnb-bi/mini-dashboard-example.html">Mini Dashboard Example</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="tag">Web prototype</span>
+      <h2>Rioel Aotearoa</h2>
+      <p>Nationwide dashboard for exploring New Zealand short-term rental data.</p>
+      <ul>
+        <li><a href="rioel-aotearoa/nationwide-dashboard.html">Nationwide Dashboard</a></li>
+        <li><a href="rioel-aotearoa/nationwide-dashboard-v2.html">Nationwide Dashboard v2</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="tag">Health analytics</span>
+      <h2>SmartCare Health Console</h2>
+      <p>Risk tiers, readiness scores, care plans and a what-if simulator for 50 patients.</p>
+      <ul>
+        <li><a href="smartcare/health-console.html">Health Console</a></li>
+        <li><a href="smartcare/powerbi-build-guide.md">Power BI Build Guide</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="tag">Retail analytics</span>
+      <h2>ShopSmart — NextGen Retail</h2>
+      <p>Sales forecasting and customer clustering case study.</p>
+      <ul>
+        <li><a href="shopsmart/nextgen-retail-case-study.md">Case Study</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="tag">Strategy</span>
+      <h2>Project Phoenix</h2>
+      <p>Board pitch for KiwiSoft's 3-year hybrid human-AI strategy.</p>
+      <ul>
+        <li><a href="project-phoenix/index.html">Board Pitch (10 slides)</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="tag">Internship · ACM Removals</span>
+      <h2>Rioel Vehicle Tracker</h2>
+      <p>Turns vehicle GPS exports into payroll-ready start and finish times.</p>
+      <ul>
+        <li><a href="rioel-vehicle-tracker/index.html">Vehicle Tracker</a></li>
+        <li><a href="rioel-vehicle-tracker/internship-concept-proposal.md">Concept Proposal</a></li>
+        <li><a href="rioel-vehicle-tracker/letter-to-director.md">Letter to Director</a></li>
+        <li><a href="https://github.com/rimshashakya11-dotcom/Rioel-Vehicle-Tracker">Full project repo</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>Each dashboard is a single self-contained HTML file. <a href="https://github.com/rimshashakya11-dotcom/806">View on GitHub</a></footer>
+</div>
+</body>
+</html>

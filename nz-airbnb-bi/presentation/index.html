@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MBI807B NZ Short-Term Rentals - Presentation</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  body { margin:0; background:#1b1d21; color:#e8e6e1; font-family:system-ui, sans-serif; }
+  header { max-width:1100px; margin:0 auto; padding:24px 16px 8px; }
+  header h1 { font-size:22px; margin:0 0 4px; }
+  header p { margin:0; color:#a9a7a2; font-size:14px; }
+  main { max-width:1100px; margin:0 auto; padding:8px 16px 48px; }
+  .frame { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:8px; margin-top:24px; box-shadow:0 4px 20px rgba(0,0,0,.4); }
+  .stage { position:absolute; top:0; left:0; width:1920px; height:1080px; transform-origin:0 0; }
+  .stage > section { position:relative; box-sizing:border-box; width:1920px; height:1080px; margin:0; }
+  .stage table { border-collapse:collapse; }
+  .stage th, .stage td { text-align:left; padding:12px 16px; }
+  .stage ul { margin:0; padding-left:1.2em; }
+  .stage p, .stage h1, .stage h2, .stage h3 { margin:0; }
+  .notes { margin-top:8px; font-size:14px; color:#c9c7c2; }
+  .notes summary { cursor:pointer; color:#a9a7a2; }
+</style>
+</head>
+<body>
+<header><h1>MBI807B NZ Short-Term Rentals - Presentation</h1><p>5 slides · scroll down · speaker notes under each slide</p></header>
+<main>
+<div class="frame"><div class="stage"><section id="dataset" data-transition="fade" style="background:#0B1722;color:#F5F1E8;font-family:'Inter', Arial, sans-serif;padding:96px 128px 160px;display:flex;flex-direction:column;justify-content:space-between;gap:32px">
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;color:#F2A66B">BUSINESS INTELLIGENCE FOR NEW ZEALAND SHORT-TERM RENTALS</p>
+<h1 style="font-family:Georgia, 'Times New Roman', serif;font-size:80px;font-weight:700;line-height:1.1">Dataset and business problem</h1>
+</div>
+<div style="display:flex;gap:40px;align-items:flex-start">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#0F2231;padding:40px;border-radius:12px">
+<p style="font-size:30px;line-height:1.4"><b style="color:#F2A66B">Problem.</b> Rental data is spread across four large files, so it is hard to compare ward prices or trust the numbers.</p>
+<p style="font-size:30px;line-height:1.4"><b style="color:#F2A66B">Question.</b> How do price and demand differ by ward, and how reliable is each figure?</p>
+<p style="font-size:30px;line-height:1.4"><b style="color:#F2A66B">Dataset.</b> Inside Airbnb New Zealand, 13 August 2026, under a Creative Commons licence.</p>
+</div>
+<div style="width:560px;display:flex;flex-direction:column;gap:16px">
+<div style="background:#0F2231;padding:24px 32px;border-radius:12px"><p style="font-family:Georgia, 'Times New Roman', serif;font-size:56px;font-weight:700">51,096</p><p style="font-size:28px;color:#D5E0E8">listings</p></div>
+<div style="background:#0F2231;padding:24px 32px;border-radius:12px"><p style="font-family:Georgia, 'Times New Roman', serif;font-size:56px;font-weight:700">3,472,029</p><p style="font-size:28px;color:#D5E0E8">review events</p></div>
+<div style="background:#0F2231;padding:24px 32px;border-radius:12px"><p style="font-family:Georgia, 'Times New Roman', serif;font-size:56px;font-weight:700">18,733,644</p><p style="font-size:28px;color:#D5E0E8">calendar listing-days</p></div>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:26px;color:#E6EDF2">Rimsha Shakya · 270898368 · MBI807B Assessment 1</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:26px;text-align:right;color:#E6EDF2">01</p>
+
+</section>
+</div></div><details class="notes"><summary>Speaker notes · slide 1</summary><p>Introduce yourself and the project. Problem: rental data is scattered and not decision-ready. Question: how do price and demand differ by ward and how far can each number be trusted. Dataset: Inside Airbnb New Zealand, 13 August 2026, four sources: listings 51,096, reviews 3,472,029, calendar 18,733,644 listing-days, plus a 239-row ward reference.</p></details>
+<div class="frame"><div class="stage"><section id="storage" data-transition="fade" style="background:#0B1722;color:#F5F1E8;font-family:'Inter', Arial, sans-serif;padding:96px 128px 160px;display:flex;flex-direction:column;justify-content:space-between;gap:32px">
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;color:#F2A66B">STORAGE AND ARCHITECTURE</p>
+<h2 style="font-family:Georgia, 'Times New Roman', serif;font-size:72px;font-weight:700;line-height:1.1">SQLite star schema now, cloud warehouse later</h2>
+</div>
+<table style="width:1664px;border-collapse:collapse;font-size:28px;background:#0F2231">
+<tr><th style="text-align:left;padding:16px 20px;background:#1A3B54;color:#F2A66B"> </th><th style="text-align:left;padding:16px 20px;background:#1A3B54;color:#F2A66B">Relational (SQLite)</th><th style="text-align:left;padding:16px 20px;background:#1A3B54;color:#F2A66B">Cloud warehouse</th><th style="text-align:left;padding:16px 20px;background:#1A3B54;color:#F2A66B">Document database</th></tr>
+<tr><td style="padding:14px 20px;border-bottom:1px solid #2C4A62;font-weight:700">Scalability</td><td style="padding:14px 20px;border-bottom:1px solid #2C4A62">Single file; limited concurrency</td><td style="padding:14px 20px;border-bottom:1px solid #2C4A62">Elastic; many users</td><td style="padding:14px 20px;border-bottom:1px solid #2C4A62">High horizontal scale</td></tr>
+<tr><td style="padding:14px 20px;border-bottom:1px solid #2C4A62;font-weight:700">Integrity</td><td style="padding:14px 20px;border-bottom:1px solid #2C4A62">Foreign keys off by default</td><td style="padding:14px 20px;border-bottom:1px solid #2C4A62">Constraints often informational</td><td style="padding:14px 20px;border-bottom:1px solid #2C4A62">Schema not enforced</td></tr>
+<tr><td style="padding:14px 20px;border-bottom:1px solid #2C4A62;font-weight:700">Security</td><td style="padding:14px 20px;border-bottom:1px solid #2C4A62">No built-in roles</td><td style="padding:14px 20px;border-bottom:1px solid #2C4A62">Misconfigured access; residency</td><td style="padding:14px 20px;border-bottom:1px solid #2C4A62">Operator-configured</td></tr>
+<tr><td style="padding:14px 20px;font-weight:700">Verdict</td><td style="padding:14px 20px;color:#F2A66B;font-weight:700">Prototype choice</td><td style="padding:14px 20px;font-weight:700">Production path</td><td style="padding:14px 20px;font-weight:700">Not for core store</td></tr>
+</table>
+<p style="font-size:30px;line-height:1.4;background:#0F2231;padding:20px 28px;border-radius:12px">Design: 3 fact tables (listings, monthly reviews, monthly calendar) and 4 dimensions (host, location, property, date). 0 foreign-key violations.</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:26px;text-align:right;color:#E6EDF2">02</p>
+
+</section>
+</div></div><details class="notes"><summary>Speaker notes · slide 2</summary><p>Three storage options were compared on scalability, integrity, security, cost and compliance. SQLite is the prototype choice because it matches the star schema, is transparent and reproducible, and costs nothing. Its limits are concurrency and governance, so a managed cloud warehouse is the production path when users or refresh frequency grow. A document database is not suitable for the core store. The warehouse has three fact tables and four dimensions, and a foreign-key check returns zero violations.</p></details>
+<div class="frame"><div class="stage"><section id="etl" data-transition="fade" style="background:#0B1722;color:#F5F1E8;font-family:'Inter', Arial, sans-serif;padding:96px 128px 160px;display:flex;flex-direction:column;justify-content:space-between;gap:32px">
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;color:#F2A66B">ETL PROCESS</p>
+<h2 style="font-family:Georgia, 'Times New Roman', serif;font-size:72px;font-weight:700;line-height:1.1">Four Python scripts from raw files to a checked warehouse</h2>
+</div>
+<div style="display:flex;gap:20px">
+<div style="flex:1;background:#0F2231;padding:28px;border-radius:12px;display:flex;flex-direction:column;gap:8px"><h3 style="font-size:32px;color:#F2A66B">1 Extract</h3><p style="font-size:26px;line-height:1.35">Listings, reviews, calendar and wards</p></div>
+<div style="flex:1;background:#0F2231;padding:28px;border-radius:12px;display:flex;flex-direction:column;gap:8px"><h3 style="font-size:32px;color:#F2A66B">2 Clean</h3><p style="font-size:26px;line-height:1.35">Remove duplicate IDs; flag and impute prices</p></div>
+<div style="flex:1;background:#0F2231;padding:28px;border-radius:12px;display:flex;flex-direction:column;gap:8px"><h3 style="font-size:32px;color:#F2A66B">3 Transform</h3><p style="font-size:26px;line-height:1.35">Build dimensions; aggregate to listing-month</p></div>
+<div style="flex:1;background:#0F2231;padding:28px;border-radius:12px;display:flex;flex-direction:column;gap:8px"><h3 style="font-size:32px;color:#F2A66B">4 Load</h3><p style="font-size:26px;line-height:1.35">Write to SQLite with key constraints</p></div>
+<div style="flex:1;background:#0F2231;padding:28px;border-radius:12px;display:flex;flex-direction:column;gap:8px"><h3 style="font-size:32px;color:#F2A66B">5 Verify</h3><p style="font-size:26px;line-height:1.35">Counts, foreign keys, integrity check</p></div>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;background:#0F2231;padding:32px 36px;border-radius:12px;display:flex;flex-direction:column;gap:10px">
+<h3 style="font-size:34px">What the cleaning does</h3>
+<p style="font-size:28px;line-height:1.4">5,455 missing prices (10.7%) are filled with the ward median and flagged, not hidden.</p>
+<p style="font-size:28px;line-height:1.4">Calendar days are summed to listing-months: 18.7M rows become 649,337.</p>
+</div>
+<div style="flex:1;background:#0F2231;padding:32px 36px;border-radius:12px;display:flex;flex-direction:column;gap:10px">
+<h3 style="font-size:34px">What the checks show</h3>
+<p style="font-size:28px;line-height:1.4">Zero duplicate listing IDs and zero orphan keys.</p>
+<p style="font-size:28px;line-height:1.4">Integrity check passed; row counts reconcile.</p>
+</div>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:26px;text-align:right;color:#E6EDF2">03</p>
+
+</section>
+</div></div><details class="notes"><summary>Speaker notes · slide 3</summary><p>Walk through the activity diagram: extract four sources, clean, transform in parallel, integrate, load, verify. Four commented Python scripts. Prices missing for 5,455 listings are imputed with the ward median and always flagged. Calendar days are aggregated to listing-month, which reduces the table about 29-fold to 649,337 rows. After loading, there are zero duplicates, zero orphans and the SQLite integrity check passes.</p></details>
+<div class="frame"><div class="stage"><section id="dashboard" data-transition="fade" style="background:#0B1722;color:#F5F1E8;font-family:'Inter', Arial, sans-serif;padding:96px 128px 160px;display:flex;flex-direction:column;justify-content:space-between;gap:28px">
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;color:#F2A66B">DASHBOARD DEMO</p>
+<h2 style="font-family:Georgia, 'Times New Roman', serif;font-size:72px;font-weight:700;line-height:1.1">Power BI: price, quality and demand by ward</h2>
+</div>
+<div style="display:flex;gap:32px">
+<img src="images/35b8c16c9300d72dc4ec229800010b6f.png" alt="Power BI overview page with listings, median price and Superhost share" style="width:816px;height:453px;object-fit:contain;background:#0F2231;border-radius:12px">
+<img src="images/24f920cdce1a830cb66ea372bd8f4e91.png" alt="Power BI dashboard page with ward ranking and map" style="width:816px;height:453px;object-fit:contain;background:#0F2231;border-radius:12px">
+</div>
+<div style="display:flex;gap:20px">
+<div style="flex:1;background:#0F2231;padding:20px 28px;border-radius:12px"><p style="font-size:28px;line-height:1.35"><b style="color:#F2A66B">NZ$581 vs NZ$213.</b> Queenstown-Wakatipu against Albert-Eden-Puketāpapa, a 2.7× gap.</p></div>
+<div style="flex:1;background:#0F2231;padding:20px 28px;border-radius:12px"><p style="font-size:28px;line-height:1.35"><b style="color:#F2A66B">NZ$280.</b> National median, which misleads for any single ward.</p></div>
+<div style="flex:1;background:#0F2231;padding:20px 28px;border-radius:12px"><p style="font-size:28px;line-height:1.35"><b style="color:#F2A66B">10.7% and 6.7%.</b> Imputed prices and listings with detail, shown beside the KPIs.</p></div>
+</div>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:26px;text-align:right;color:#E6EDF2">04</p>
+
+</section>
+</div></div><details class="notes"><summary>Speaker notes · slide 4</summary><p>Live demo cue. Show the three-page Power BI file: overview page with total listings, median price and Superhost share; the ward ranking and map; and the reviews and calendar page. Use a slicer to show filtering by ward and room type. Then mention the Python notebook and the Rioel Aotearoa web prototype as supporting tools. Key message: price is local, and data-quality indicators sit beside every KPI. Occupancy and availability are proxies, not bookings.</p></details>
+<div class="frame"><div class="stage"><section id="risks" data-transition="fade" style="background:#0B1722;color:#F5F1E8;font-family:'Inter', Arial, sans-serif;padding:96px 128px 160px;display:flex;flex-direction:column;justify-content:space-between;gap:28px">
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;color:#F2A66B">RISKS AND RECOMMENDATIONS</p>
+<h2 style="font-family:Georgia, 'Times New Roman', serif;font-size:72px;font-weight:700;line-height:1.1">Controls in place, five actions to take</h2>
+</div>
+<div style="display:flex;gap:32px;align-items:flex-start">
+<div style="flex:1;background:#0F2231;padding:32px 36px;border-radius:12px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:34px;color:#F2A66B">Risks and controls</h3>
+<p style="font-size:27px;line-height:1.35"><b>Integrity:</b> keys, duplicate checks, SQL validation</p>
+<p style="font-size:27px;line-height:1.35"><b>Missing values:</b> ward-median imputation with a flag</p>
+<p style="font-size:27px;line-height:1.35"><b>Snapshot bias:</b> proxies named in every view</p>
+<p style="font-size:27px;line-height:1.35"><b>Privacy:</b> aggregated views, no host names shown</p>
+</div>
+<div style="flex:1;background:#0F2231;padding:32px 36px;border-radius:12px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-size:34px;color:#F2A66B">Recommendations</h3>
+<p style="font-size:27px;line-height:1.35">1 Benchmark price by ward, not nationally</p>
+<p style="font-size:27px;line-height:1.35">2 Show data-quality indicators beside KPIs</p>
+<p style="font-size:27px;line-height:1.35">3 Treat reviews and availability as proxies</p>
+<p style="font-size:27px;line-height:1.35">4 SQLite now, managed warehouse later</p>
+<p style="font-size:27px;line-height:1.35">5 Retain dated release snapshots</p>
+</div>
+</div>
+<p style="font-family:Georgia, 'Times New Roman', serif;font-size:44px;font-weight:700;line-height:1.2">From open data to a decision-ready warehouse. Thank you.</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;font-size:26px;text-align:right;color:#E6EDF2">05</p>
+
+</section>
+</div></div><details class="notes"><summary>Speaker notes · slide 5</summary><p>Risks: each has a control and evidence, with the residual risk stated in the report. Recommendations 1 to 3 start now with no new infrastructure; 5 follows in the next release; 4 is a decision gate based on usage. Close with the key message and thank the audience.</p></details>
+</main>
+<script>
+  function fit() {
+    document.querySelectorAll('.frame').forEach(f => {
+      f.querySelector('.stage').style.transform = 'scale(' + (f.clientWidth / 1920) + ')';
+    });
+  }
+  window.addEventListener('resize', fit); fit();
+</script>
+</body>
+</html>
