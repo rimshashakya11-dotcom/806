@@ -68,7 +68,7 @@ docker compose up -d --build
 
 Then open:
 - Portfolio home: <http://localhost:8080>
-- SmartCare Health Console: <http://localhost:8080/smartcare>  
+- SmartCare Health Console: <http://localhost:8080/smartcare/health-console.html>  
   Sign-ins: `admin / SmartCare@2026`, `clinician / Clinic@2026`, `analyst / Analyst@2026`
 
 Stop it with `docker compose down`.
