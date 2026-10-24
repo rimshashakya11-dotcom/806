@@ -55,5 +55,33 @@ Web dashboard that turns vehicle GPS exports into payroll-ready start and finish
 | [`rioel-vehicle-tracker/internship-concept-proposal.md`](rioel-vehicle-tracker/internship-concept-proposal.md) | Internship concept proposal |
 | [`rioel-vehicle-tracker/letter-to-director.md`](rioel-vehicle-tracker/letter-to-director.md) | Letter to the director |
 
+## Run it locally (localhost)
+
+### Option 1 – Docker (recommended)
+Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+
+```bash
+git clone https://github.com/rimshashakya11-dotcom/806.git
+cd 806
+docker compose up -d --build
+```
+
+Then open:
+- Portfolio home: <http://localhost:8080>
+- SmartCare Health Console: <http://localhost:8080/smartcare>  
+  Sign-ins: `admin / SmartCare@2026`, `clinician / Clinic@2026`, `analyst / Analyst@2026`
+
+Stop it with `docker compose down`.
+
+### Option 2 – No Docker
+Any static web server works, for example with Python installed:
+
+```bash
+cd 806
+python -m http.server 8080
+```
+
+Then open <http://localhost:8080/smartcare/health-console.html>.
+
 ## Tools used
 Python (pandas), SQLite, Power BI and DAX, HTML / CSS / JavaScript, D3.
