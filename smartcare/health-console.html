@@ -1092,7 +1092,7 @@ function bindHelp(){
 // APP SHELL
 // =====================================================================================
 function nav(){
-  const n=alertList().filter(a=>!a.resolved).length;
+  const n=openPatients();
   const items=[["today","Needs action",n],["overview","Overview"],["patients","Patients"],["compare","Compare"],["insights","Insights"],["audit","Audit log",null,!can("audit")],["users","Users & settings",null,!can("audit")],["account","My account"],["help","Help & ask"],["about","Privacy & features"]];
   return items.map(([v,l,c,locked])=>`<button type="button" data-view="${v}" ${ST.view===v?'aria-current="page"':""} ${locked?"disabled":""}><span>${l}</span>${c?`<span class="count">${c}</span>`:""}${locked?'<span class="lock">Admin</span>':""}</button>`).join("");
 }
@@ -1151,7 +1151,7 @@ function drawOverview(){
   const v=filtered(),hide=supp()&&v.length<MINN,n=v.length;
   const items=[["Patients in view",fmt(n),`of ${active().length} consented`],
     ["Avg readiness",hide?"–":fmt(mean(v.map(d=>d.Readiness))),hide?"suppressed":`transparent score · ${v.filter(d=>d.RD.st==="high").length} need rest`],
-    ["Needs action",fmt(alertList().filter(a=>!a.resolved).length),`${alertList().filter(a=>!a.resolved&&a.sev==="Urgent").length} urgent`],
+    ["Needs action",fmt(openPatients()),`patients · ${alertList().filter(a=>!a.resolved&&a.sev==="Urgent").length} urgent`],
     ["High-risk tier",hide?"–":fmt(100*v.filter(d=>d.RiskTier==="High").length/n||0)+"%",hide?"suppressed":`${v.filter(d=>d.RiskTier==="High").length} patients`],
     ["Fall alerts",hide?"–":fmt(v.filter(d=>d.FallAlerts===1).length),hide?"suppressed":"this week"],
     ["Avg sleep",hide?"–":fmt(mean(v.map(d=>d.SleepDuration_Hours)),1)+" h",hide?"suppressed":`${fmt(100*v.filter(d=>d.F_ShortSleep).length/n||0)}% under 7 h`]];
@@ -1698,6 +1698,7 @@ function viewCompare(){
 // =====================================================================================
 // ALERTS, AUDIT, ABOUT
 // =====================================================================================
+function openPatients(){return new Set(alertList().filter(a=>!a.resolved).map(a=>a.d.PatientID)).size;}
 function alertList(){
   const out=[],add=(d,type,why)=>{const t=(d.Tasks||{})[type]||{},legacy=(d.AckList||[]).includes(type);out.push({d,type,why,sev:PROTOCOL[type].sev,status:t.status||(legacy?"resolved":"open"),step:t.step||0,hist:t.hist||[],resolved:(t.status||(legacy?"resolved":""))==="resolved"});};
   active().forEach(d=>{
@@ -1725,7 +1726,7 @@ function viewToday(){
   const sel=ST.tsel&&list.find(a=>a.d.PatientID+a.type===ST.tsel)||list[0];
   $("#main").innerHTML=`
   <div class="page-head compact"><div><div class="eyebrow">Exceptions only · ${today()}</div><h1>Needs action today</h1></div>
-    <div class="sevstrip"><span class="pill High">${cnt("Urgent")} urgent</span><span class="pill Moderate">${cnt("High")} high</span><span class="pill Low">${cnt("Review")} review</span><span class="note">${done} resolved</span></div></div>
+    <div class="sevstrip"><span class="note">${new Set(list.map(a=>a.d.PatientID)).size} patients · ${list.length} tasks</span><span class="pill High">${cnt("Urgent")} urgent</span><span class="pill Moderate">${cnt("High")} high</span><span class="pill Low">${cnt("Review")} review</span><span class="note">${done} resolved</span></div></div>
   <section class="today2 fill">
     <div class="card"><h2>Work queue</h2><div class="tablewrap scroll"><table class="data queue"><thead><tr><th>Priority</th><th>Issue</th><th>Patient</th><th>Detail</th><th>Pathway step</th><th>Status</th></tr></thead><tbody>
     ${list.map(a=>{const P=PROTOCOL[a.type],k=a.d.PatientID+a.type;return `<tr class="click ${sel&&k===sel.d.PatientID+sel.type?"sel":""}" data-task="${esc(k)}"><td><span class="pill ${tone[a.sev]}">${a.sev}</span></td><td><b>${a.type}</b></td><td>${idBtn(a.d)}<div class="note">${can("names")&&a.d.Name?esc(a.d.Name):""}</div></td><td>${esc(a.why)}</td>
